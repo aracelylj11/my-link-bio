@@ -14,6 +14,17 @@ def home():
     return render_template("index.html", links=links)
 
 
+@app.route("/add", methods=["POST"])
+def add_link():
+    link_name = request.form.get("name", "").strip()
+    link_url = request.form.get("url", "").strip()
+
+    if link_name and link_url:
+        links.append({"name": link_name, "url": link_url})
+
+    return redirect(url_for("home"))
+
+
 @app.route("/edit/<int:link_index>", methods=["GET", "POST"])
 def edit_link(link_index):
     if not 0 <= link_index < len(links):
