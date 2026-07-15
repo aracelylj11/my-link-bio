@@ -17,12 +17,12 @@
         <p>A simple collection of favorite places around the web.</p>
       </section>
 
-      <form class="link-form" aria-label="Add a link">
+      <form class="link-form" action="{{ url_for('add_link') }}" method="post" aria-label="Add a link">
         <label class="form-label" for="link-name">Link name</label>
-        <input class="form-input" id="link-name" name="name" type="text" placeholder="Portfolio">
+        <input class="form-input" id="link-name" name="name" type="text" placeholder="Portfolio" required>
 
         <label class="form-label" for="link-url">URL</label>
-        <input class="form-input" id="link-url" name="url" type="url" placeholder="https://example.com">
+        <input class="form-input" id="link-url" name="url" type="url" placeholder="https://example.com" required>
 
         <button class="button" type="submit">Add link</button>
       </form>
