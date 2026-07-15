@@ -29,8 +29,29 @@
 
       <ul class="link-list">
         {% for link in links %}
+        {% set has_title = link.title and link.title != "Not Available" %}
+        {% set has_description = link.description and link.description != "Not Available" %}
+        {% set has_image = link.image_url and link.image_url != "Not Available" %}
+        {% set has_rich_content = has_title or has_description or has_image %}
         <li class="link-card">
           <div class="link-card-content">
+            {% if has_rich_content %}
+            <article class="rich-card" aria-label="{{ link.name }} details">
+              {% if has_image %}
+              <img class="rich-card-image" src="{{ link.image_url }}" alt="Preview image for {{ link.name }}">
+              {% endif %}
+              <div class="rich-card-body">
+                <h2 class="rich-card-title">{{ link.title if has_title else link.name }}</h2>
+                {% if has_description %}
+                <p class="rich-card-description">{{ link.description }}</p>
+                {% endif %}
+                <a class="rich-card-url" href="{{ link.url }}">
+                  {{ link.url }}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </article>
+            {% else %}
             <a class="link-name" href="{{ link.url }}">
               {{ link.name }}
               <span aria-hidden="true">→</span>
@@ -49,6 +70,7 @@
                 <dd>{{ link.image_url }}</dd>
               </div>
             </dl>
+            {% endif %}
           </div>
           <div class="link-actions">
             <a class="edit-button" href="{{ url_for('edit_link', link_index=loop.index0) }}">Edit</a>

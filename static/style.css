@@ -144,6 +144,56 @@ body {
   min-width: 0;
 }
 
+.rich-card {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card-bg);
+}
+
+.rich-card-image {
+  display: block;
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+}
+
+.rich-card-body {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+}
+
+.rich-card-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.rich-card-description {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.rich-card-url {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--primary);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.rich-card-url:hover {
+  color: var(--primary-dark);
+}
+
 .link-name {
   display: flex;
   justify-content: space-between;
