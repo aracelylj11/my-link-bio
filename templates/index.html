@@ -30,10 +30,26 @@
       <ul class="link-list">
         {% for link in links %}
         <li class="link-card">
-          <a href="{{ link.url }}">
-            {{ link.name }}
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="link-card-content">
+            <a class="link-name" href="{{ link.url }}">
+              {{ link.name }}
+              <span aria-hidden="true">→</span>
+            </a>
+            <dl class="metadata-grid" aria-label="Open Graph metadata">
+              <div class="metadata-column">
+                <dt>Title</dt>
+                <dd>{{ link.title }}</dd>
+              </div>
+              <div class="metadata-column">
+                <dt>Description</dt>
+                <dd>{{ link.description }}</dd>
+              </div>
+              <div class="metadata-column">
+                <dt>Image URL</dt>
+                <dd>{{ link.image_url }}</dd>
+              </div>
+            </dl>
+          </div>
           <div class="link-actions">
             <a class="edit-button" href="{{ url_for('edit_link', link_index=loop.index0) }}">Edit</a>
             <form action="{{ url_for('delete_link', link_index=loop.index0) }}" method="post">

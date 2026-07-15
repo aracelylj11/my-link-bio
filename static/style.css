@@ -125,9 +125,9 @@ body {
 }
 
 .link-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
   gap: 16px;
   padding: 18px;
   transition: border-color 160ms ease, transform 160ms ease;
@@ -138,9 +138,14 @@ body {
   transform: translateY(-2px);
 }
 
-.link-card a {
+.link-card-content {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.link-name {
   display: flex;
-  flex: 1;
   justify-content: space-between;
   gap: 16px;
   color: var(--text);
@@ -148,8 +153,46 @@ body {
   text-decoration: none;
 }
 
-.link-card a span {
+.link-name span {
   color: var(--primary);
+}
+
+.metadata-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.metadata-column {
+  min-width: 0;
+}
+
+.metadata-column dt {
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.metadata-column dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .link-card {
+    grid-template-columns: 1fr;
+  }
+
+  .metadata-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 
