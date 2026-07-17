@@ -1,4 +1,9 @@
+import logging
+
 from flask import Flask, redirect, render_template, request, url_for
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
@@ -24,7 +29,10 @@ def fetch_open_graph_metadata(link_url):
     try:
         response = requests.get(link_url, timeout=5)
         response.raise_for_status()
-    except requests.RequestException:
+    except requests.RequestException as error:
+        logger.warning(
+            "Failed to retrieve Open Graph data for %s: %s", link_url, error
+        )
         return metadata
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -79,7 +87,13 @@ def add_link():
     link_url = request.form.get("url", "").strip()
 
     if link_name and link_url:
-        links.append(create_link(link_name, link_url))
+        new_link = create_link(link_name, link_url)
+        metadata_fields = ("title", "description", "image_url")
+        if all(new_link[field] == NOT_AVAILABLE for field in metadata_fields):
+            logger.warning("Metadata could not be retrieved for %s", link_url)
+
+        links.append(new_link)
+        logger.info("Added new link: %s (%s)", link_name, link_url)
 
     return redirect(url_for("home"))
 
