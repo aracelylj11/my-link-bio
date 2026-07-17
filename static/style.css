@@ -45,6 +45,10 @@ body {
   color: var(--primary-dark);
 }
 
+.nav-link-secondary {
+  margin-left: 20px;
+}
+
 .hero {
   margin-bottom: 28px;
   text-align: center;
@@ -63,7 +67,8 @@ body {
 }
 
 .link-form,
-.link-card {
+.link-card,
+.contact-card {
   border: 1px solid var(--border);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.88);
@@ -75,6 +80,32 @@ body {
   gap: 14px;
   margin-bottom: 22px;
   padding: 20px;
+}
+
+.contact-card {
+  padding: 24px;
+  text-align: center;
+}
+
+.contact-card h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.contact-email {
+  color: var(--primary);
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.contact-email:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
 }
 
 .form-label {
