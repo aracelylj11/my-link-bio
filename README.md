@@ -8,6 +8,7 @@ A personal link-in-bio page built with Python and Flask. Add, edit, or remove li
 
 - Create, update, and delete link cards from the home page.
 - View link preview metadata when a URL provides Open Graph tags.
+- See a warning after adding a link when a preview cannot be retrieved; cards with incomplete preview metadata are visibly marked.
 - Visit `/about` for a short introduction.
 - Visit `/contact` to see a contact message and send an email to `hello@example.com`.
 
