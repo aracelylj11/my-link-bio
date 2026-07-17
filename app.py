@@ -3,6 +3,7 @@ from flask import Flask, redirect, render_template, request, url_for
 app = Flask(__name__)
 
 NOT_AVAILABLE = "Not Available"
+CONTACT_EMAIL = "hello@example.com"
 
 
 def create_link(link_name, link_url):
@@ -108,6 +109,11 @@ def delete_link(link_index):
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html", email=CONTACT_EMAIL)
 
 
 if __name__ == "__main__":
