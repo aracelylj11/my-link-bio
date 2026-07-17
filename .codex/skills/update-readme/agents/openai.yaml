@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update README"
+  short_description: "Keep project README documentation current."
+  default_prompt: "Update README.md for my project changes."
