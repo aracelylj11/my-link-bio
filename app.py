@@ -1,11 +1,12 @@
 import logging
 
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+app.config["SECRET_KEY"] = "development-secret-key"
 
 NOT_AVAILABLE = "Not Available"
 CONTACT_EMAIL = "hello@example.com"
@@ -14,6 +15,11 @@ CONTACT_EMAIL = "hello@example.com"
 def create_link(link_name, link_url):
     metadata = fetch_open_graph_metadata(link_url)
     return {"name": link_name, "url": link_url, **metadata}
+
+
+def metadata_is_unavailable(link):
+    metadata_fields = ("title", "description", "image_url")
+    return all(link[field] == NOT_AVAILABLE for field in metadata_fields)
 
 
 def fetch_open_graph_metadata(link_url):
@@ -88,9 +94,12 @@ def add_link():
 
     if link_name and link_url:
         new_link = create_link(link_name, link_url)
-        metadata_fields = ("title", "description", "image_url")
-        if all(new_link[field] == NOT_AVAILABLE for field in metadata_fields):
+        if metadata_is_unavailable(new_link):
             logger.warning("Metadata could not be retrieved for %s", link_url)
+            flash(
+                "We saved your link but could not retrieve a preview ofr that URL.",
+                "warning",
+            )
 
         links.append(new_link)
         logger.info("Added new link: %s (%s)", link_name, link_url)

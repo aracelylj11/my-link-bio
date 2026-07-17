@@ -18,6 +18,16 @@
         <p>A simple collection of favorite places around the web.</p>
       </section>
 
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <section class="flash-messages" aria-label="Notifications">
+            {% for category, message in messages %}
+              <p class="flash-message flash-message--{{ category }}" role="alert">{{ message }}</p>
+            {% endfor %}
+          </section>
+        {% endif %}
+      {% endwith %}
+
       <form class="link-form" action="{{ url_for('add_link') }}" method="post" aria-label="Add a link">
         <label class="form-label" for="link-name">Link name</label>
         <input class="form-input" id="link-name" name="name" type="text" placeholder="Portfolio" required>
@@ -34,8 +44,14 @@
         {% set has_description = link.description and link.description != "Not Available" %}
         {% set has_image = link.image_url and link.image_url != "Not Available" %}
         {% set has_rich_content = has_title or has_description or has_image %}
-        <li class="link-card">
+        {% set has_full_preview = has_title and has_description and has_image %}
+        <li class="link-card{% if not has_full_preview %} link-card--missing-preview{% endif %}">
           <div class="link-card-content">
+            {% if not has_full_preview %}
+            <p class="preview-status">
+              {% if has_rich_content %}Partial preview{% else %}Preview unavailable{% endif %}
+            </p>
+            {% endif %}
             {% if has_rich_content %}
             <article class="rich-card" aria-label="{{ link.name }} details">
               {% if has_image %}
